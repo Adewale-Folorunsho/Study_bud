@@ -10,6 +10,9 @@ from .forms import RoomForm
 
 
 def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -27,11 +30,12 @@ def loginPage(request):
         else:
             messages.error(request, "Incorrect login details")
 
-
     # context = {}
     return render(request, 'base/login_register.html', {})
 
 def logoutPage(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     logout(request)
     return render(request, 'base/home.html')
 
