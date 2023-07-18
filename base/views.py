@@ -148,3 +148,17 @@ def deleteMessage(request, pk):
         message.delete()
         return redirect("home")
     return render(request, "base/delete.html", {"obj": message})
+
+
+def profilePage(request, pk):
+    user = User.objects.get(id=pk)
+    rooms = user.room_set.all()
+    activities = user.message_set.all()
+    topics = Topic.objects.all()
+    context = {
+        "user": user,
+        "rooms": rooms,
+        "activities": activities,
+        "topics": topics,
+    }
+    return render(request, "base/profile.html", context)

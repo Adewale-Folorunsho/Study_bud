@@ -1,7 +1,10 @@
 <h3>Recent Activity</h3>
 {% for message in activities %}
 <div>
-	<small>@{{message.user}} {{message.created|timesince}} ago </small>
+	<small>
+		<a href="{% url 'profile-page' message.user.id %}">@{{message.user}}</a>
+		{{message.created|timesince}} ago
+	</small>
 	<small>replied to "{{message.room}}"</small>
 	<p>{{message}}</p>
 	{% if request.user == message.user %}
